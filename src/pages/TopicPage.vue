@@ -1,8 +1,18 @@
 <template>
-  <div>
-    Выберите тему
+  <div class="orientation">
+    <div>
+      Выберите тему
+    </div>
+    <RouterLink to="/Game">
+      <button>ok</button>
+    </RouterLink>
+    <RouterLink to="/">
+      <button>Назад</button>
+    </RouterLink>
   </div>
-  <router-link to="/Game">
-    <button>ok</button>
-  </router-link>
 </template>
+<style>
+.orientation{
+  text-align: center;
+}
+</style>
