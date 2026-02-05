@@ -1,21 +1,27 @@
 <template>
-    <div class="navbar">
-        <img src="/Balda.svg" alt="Logo" class="logo">
-        <h1>Балда</h1>
-    </div>
+    <header class="header">
+        <RouterLink to="/">
+            <img src="/Balda.svg" alt="Logo" width="64">
+        </RouterLink>
+        <b>Балда</b>
+    </header>
 </template>
 
 
 <style>
-.navbar{
-    color: var(--text-navbar-color);
-    background-color: var(--primary);
+
+:root{
+    --color-white: #ffffff;
+}
+
+.header{
+    color: var(--color-white);
+    background-color: var(--color-primary);
     display: flex;
-    padding-left: 16px;
+    padding: 16px;
     gap: 16px;
     border-radius: 8px;
+    font-size: 64px;
 }
-.logo{
-    max-width: 64px;
-}
+
 </style>

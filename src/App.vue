@@ -11,8 +11,8 @@ import TheHeader from './components/TheHeader.vue';
 </template>
 
 <style>
+
 :root{
-  --primary: #0011ff;
-  --text-navbar-color: #ffffff;
+  --color-primary: #0011ff;
 }
 </style>

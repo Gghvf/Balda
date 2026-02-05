@@ -6,9 +6,12 @@
         </RouterLink>
     </div>
 </template>
+
 <style>
+
 .orientation{
     padding: 16px;
     text-align: center;
 }
+
 </style>
