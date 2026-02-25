@@ -11,8 +11,11 @@
     </RouterLink>
   </div>
 </template>
-<style>
+
+<style scoped>
+
 .orientation{
   text-align: center;
 }
+
 </style>

@@ -8,11 +8,7 @@
 </template>
 
 
-<style>
-
-:root{
-    --color-white: #ffffff;
-}
+<style scoped>
 
 .header{
     color: var(--color-white);
