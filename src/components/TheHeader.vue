@@ -1,12 +1,14 @@
 <template>
     <header class="header">
+
         <RouterLink to="/">
             <img src="/Balda.svg" alt="Logo" width="64">
         </RouterLink>
+
         <b>Балда</b>
+
     </header>
 </template>
-
 
 <style scoped>
 

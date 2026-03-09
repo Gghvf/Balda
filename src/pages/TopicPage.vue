@@ -3,14 +3,19 @@
     <div>
       Выберите тему
     </div>
-    <RouterLink to="/Game">
-      <button>ok</button>
-    </RouterLink>
-    <RouterLink to="/">
-      <button>Назад</button>
-    </RouterLink>
+
+    <UiButton @click="router.push('game')">ok</UiButton>
+    
+    <UiButton @click="router.back">Назад</UiButton>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+import UiButton from '../components/UiButton.vue';
+
+const router = useRouter();
+</script>
 
 <style scoped>
 
