@@ -11,13 +11,21 @@
 
 <div class="orientation"> 
 
+<<<<<<< HEAD
     <UiButton @click="router.push('topic')">Начать игру</UiButton>
+=======
+    <UiButton @click="router.push('Topic')">Начать игру</UiButton>
+>>>>>>> 3fc9a9b (Restore project files after lock fix)
 
 </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3fc9a9b (Restore project files after lock fix)
 import UiButton from '../components/UiButton.vue';
 
 const router = useRouter();

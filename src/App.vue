@@ -18,5 +18,8 @@ import TheHeader from './components/TheHeader.vue';
 :root{
   --color-primary: #0011ff;
   --color-white: #ffffff;
+  --color-black: #000000;
+  --color-red: #c45e5e;
+  --color-green: #3ead5a;
 }
 </style>

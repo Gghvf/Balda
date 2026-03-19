@@ -1,10 +1,7 @@
-<!-- src/pages/GamePage.vue -->
 <template>
   <div class="game-container">
-    <!-- Кнопка назад -->
     <UiButton @click="goBack">Назад</UiButton>
 
-    <!-- Сообщение о завершении игры -->
     <div v-if="gameStatus !== 'playing'" class="end-game-message">
       <h2>{{ gameStatus === 'won' ? 'Поздравляем! Вы выиграли!' : 'Вы проиграли!' }}</h2>
       <p>Загаданное слово: {{ targetWord.toUpperCase() }}</p>
@@ -14,7 +11,6 @@
       </div>
     </div>
 
-    <!-- Основная область игры -->
     <div v-else class="game-area">
       <div class="hangman-image">
         <img :src="currentImage" :alt="`Виселица ${attempts}`" />
@@ -56,13 +52,13 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router'; // Обязательно импортируем useRoute
+import { useRouter, useRoute } from 'vue-router';
+
 import UiButton from '../components/UiButton.vue';
 
 const router = useRouter();
-const route = useRoute(); // Обязательно получаем route
+const route = useRoute();
 
-// --- Состояние игры ---
 const targetWord = ref<string>('');
 const displayedWord = ref<string[]>([]);
 const guessedLetters = ref<string[]>([]);
@@ -71,7 +67,6 @@ const maxAttempts = 12;
 const inputLetter = ref<string>('');
 const inputError = ref<boolean>(false);
 
-// --- Словарь тем и слов ---
 const themesDictionary: Record<string, string[]> = {
   cities: ['москва', 'лондон', 'токио', 'париж', 'берлин'],
   countries: ['россия', 'германия', 'япония', 'франция', 'италия'],
@@ -79,21 +74,17 @@ const themesDictionary: Record<string, string[]> = {
   food: ['пицца', 'суши', 'борщ', 'паста', 'салат']
 };
 
-// --- Загрузка данных из маршрута ---
 onMounted(async () => {
-  // Получаем строку тем из параметров маршрута
   const selectedThemesParam = route.query.selectedThemes as string | undefined;
 
   if (!selectedThemesParam) {
     console.error("Параметр 'selectedThemes' не найден в маршруте!");
-    await router.replace('/topic'); // Перенаправляем на выбор тем, если параметр отсутствует
+    await router.replace('/topic');
     return;
   }
 
-  // Разбиваем строку тем по запятой
   const selectedThemeKeys = selectedThemesParam.split(',');
 
-  // Используем 'in' оператор для проверки ключа в словаре
   const validSelectedThemes = selectedThemeKeys.filter(key => key in themesDictionary);
 
   if (validSelectedThemes.length === 0) {
@@ -105,10 +96,8 @@ onMounted(async () => {
   console.log('Выбранные темы (валидные):', validSelectedThemes);
 
   let allWordsForGame: string[] = [];
-  // Используем for...of для итерации по валидным ключам
+
   for (const themeKey of validSelectedThemes) {
-    // Явная проверка на случай, если вдруг themesDictionary[themeKey] окажется undefined
-    // Хотя с типом Record<string, string[]> это маловероятно, но лишней не будет
     const words = themesDictionary[themeKey];
     if (words && Array.isArray(words)) {
       allWordsForGame = allWordsForGame.concat(words);
@@ -125,22 +114,15 @@ onMounted(async () => {
 
   console.log('Слова для игры:', allWordsForGame);
 
-  // --- Выбор случайного слова ---
-  // Теперь мы уверены, что allWordsForGame не пустой, благодаря проверке выше.
-  // Но TypeScript этого не знает автоматически для следующей строки.
   const randomIndex = Math.floor(Math.random() * allWordsForGame.length);
-  const randomWordCandidate = allWordsForGame[randomIndex]; // Тип: string | undefined
+  const randomWordCandidate = allWordsForGame[randomIndex];
 
-  // Явно проверяем, определено ли слово
   if (randomWordCandidate === undefined) {
-     // Это маловероятно, если проверка allWordsForGame.length выше сработала,
-     // но убережет от TS18048
     console.error("Не удалось выбрать случайное слово.");
     await router.replace('/topic');
     return;
   }
 
-  // Теперь TypeScript знает, что randomWord определено
   const randomWord: string = randomWordCandidate;
 
   targetWord.value = randomWord.toLowerCase();
@@ -148,7 +130,6 @@ onMounted(async () => {
   console.log('Выбрано слово:', randomWord);
 });
 
-// --- Вычисляемые свойства ---
 const gameStatus = computed<'playing' | 'won' | 'lost'>(() => {
   if (displayedWord.value.every(char => char !== '_')) {
     return 'won';
@@ -164,10 +145,8 @@ const isValidInput = computed(() => /^[а-яё]$/i.test(inputLetter.value));
 const correctGuessedLetters = computed(() => guessedLetters.value.filter(letter => targetWord.value.includes(letter)));
 const incorrectGuessedLetters = computed(() => guessedLetters.value.filter(letter => !targetWord.value.includes(letter)));
 
-// --- Путь к изображениям виселицы ---
 const currentImage = computed(() => `/${attempts.value}.png`);
 
-// --- Методы ---
 const validateInput = () => {
   if (!/^[а-яё]$/i.test(inputLetter.value)) {
     inputError.value = true;
@@ -204,8 +183,6 @@ const makeGuess = () => {
 };
 
 const restartGame = () => {
-  // Перезапуск игры с теми же темами
-  // Получаем строку тем из параметров маршрута
   const selectedThemesParam = route.query.selectedThemes as string | undefined;
 
   if (!selectedThemesParam) {
@@ -239,20 +216,17 @@ const restartGame = () => {
     return;
   }
 
-  // --- Выбор случайного слова ---
-  const randomIndex = Math.floor(Math.random() * allWordsForGame.length);
-  const randomWordCandidate = allWordsForGame[randomIndex]; // Тип: string | undefined
 
-  // Явно проверяем, определено ли слово
+  const randomIndex = Math.floor(Math.random() * allWordsForGame.length);
+  const randomWordCandidate = allWordsForGame[randomIndex];
+
   if (randomWordCandidate === undefined) {
-    // Это маловероятно, если проверка allWordsForGame.length выше сработала,
-    // но убережет от TS18048
+
     console.error("Не удалось выбрать случайное слово при перезапуске.");
     router.push('/topic');
     return;
   }
 
-  // Теперь TypeScript знает, что randomWord определено
   const randomWord: string = randomWordCandidate;
 
   targetWord.value = randomWord.toLowerCase();
@@ -272,7 +246,6 @@ const goToTopic = () => {
 </script>
 
 <style scoped>
-/* Примерные стили */
 .game-container {
   padding: 20px;
   text-align: center;
@@ -302,7 +275,7 @@ const goToTopic = () => {
   width: 40px;
   height: 40px;
   line-height: 40px;
-  border: 1px solid #ccc;
+  border: 1px;
   margin: 0 2px;
   text-align: center;
 }
@@ -313,16 +286,16 @@ const goToTopic = () => {
 }
 
 .input-section input {
-  padding: 5px;
-  width: 50px;
+  padding: 12px;
+  width: 64px;
   text-align: center;
-  margin-right: 10px;
-  border: 2px solid #ccc;
+  margin: 8px;
+  border: 2px solid var(--color-black);
   border-radius: 4px;
 }
 
 .input-section input.invalid-input {
-  border-color: red;
+  border-color: var(--color-red);
 }
 
 .guessed-letters {
@@ -339,11 +312,11 @@ const goToTopic = () => {
 }
 
 .letter-guessed.correct {
-  background-color: lightgreen;
+  background-color: var(--color-green);
 }
 
 .letter-guessed.incorrect {
-  background-color: lightcoral;
+  background-color: var(--color-red);
 }
 
 .end-game-message {
@@ -351,8 +324,8 @@ const goToTopic = () => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
+  background: var(--color-black);
+  color: var(--color-white);
   padding: 20px;
   border-radius: 10px;
   z-index: 1000;

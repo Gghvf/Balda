@@ -13,6 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+<<<<<<< HEAD
+=======
+* {
+  box-sizing: border-box;
+}
+
+>>>>>>> 3fc9a9b (Restore project files after lock fix)
 button {
   border-radius: 8px;
   border: 1px solid transparent;

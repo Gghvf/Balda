@@ -19,5 +19,8 @@
     background-color: var(--color-white);
     color: var(--color-primary);
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3fc9a9b (Restore project files after lock fix)
 </style>
