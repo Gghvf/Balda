@@ -36,14 +36,14 @@
           value="food">
         Еда
       </label>
-      
-    <UiButton 
-      @click="startGame" 
+    </div>
+
+    <UiButton
+      @click="startGame"
       :disabled="!isAnyThemeSelected"
       class="button"
     >Продолжить</UiButton>
     <UiButton @click="router.back" class="button">Назад</UiButton>
-    </div>
   </div>
 </template>
 
