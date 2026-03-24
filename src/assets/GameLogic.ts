@@ -56,7 +56,7 @@ export function useGameLogic(selectedThemesQuery: string | undefined) {
     guessedLetters.value.filter(letter => !targetWord.value.includes(letter))
   );
 
-  const currentImage = computed(() => `/${attempts.value}.png`);
+  const currentImage = computed(() => `/${attempts.value}.svg`);
 
   const validateInput = () => {
     isInputError.value = !isValidInput.value;

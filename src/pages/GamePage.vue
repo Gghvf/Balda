@@ -100,9 +100,9 @@ const goToTopic = () => {
   margin-top: 20px;
 }
 
-.hangman img{
-  max-width: 100%;
-  height: auto;
+.hangman {
+  width: 800px;
+  height: 800px;
 }
 
 .word {
