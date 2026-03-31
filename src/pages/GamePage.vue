@@ -146,8 +146,8 @@ const goToTopic = () => {
   border-color: var(--color-red);
 }
 
-.stats{
-  max-width: 300px;
+.stats {
+  text-align: left;
 }
 
 .stats .guessed {
@@ -192,7 +192,9 @@ const goToTopic = () => {
 }
 
 .end-buttons {
+  margin-top: 16px;
   display: flex;
   gap: 10px;
+  justify-content: center;
 }
 </style>

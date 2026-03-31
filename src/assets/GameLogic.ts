@@ -1,7 +1,9 @@
 import { ref, computed } from 'vue';
 
-import { themesDictionary } from './GameWords';
-import type { ThemeKey } from './GameWords';
+import { themesDictionary } from '../../data/GameWords'
+import type { ThemeKey } from '../../data/GameWords';
+
+export type GameStatus = 'playing' | 'won' | 'lost';
 
 export function useGameLogic(selectedThemesQuery: string | undefined) {
   const targetWord = ref<string>('');
@@ -18,16 +20,12 @@ export function useGameLogic(selectedThemesQuery: string | undefined) {
   const selectedThemeKeys = selectedThemesQuery.split(',') as ThemeKey[];
   const validThemes = selectedThemeKeys.filter(key => key in themesDictionary);
 
-  if (validThemes.length === 0) return false;
-
   const allWords = validThemes.flatMap(key => themesDictionary[key]);
-  if (allWords.length === 0) return false;
 
   const randomIndex = Math.floor(Math.random() * allWords.length);
-  const randomWordCandidate = allWords[randomIndex]; // Тип: string | undefined
+  const randomWordCandidate = allWords[randomIndex];
 
   if (randomWordCandidate === undefined) {
-    console.error("Не удалось выбрать случайное слово.");
     return false;
   }
 
@@ -40,7 +38,7 @@ export function useGameLogic(selectedThemesQuery: string | undefined) {
   return true;
 };
 
-  const gameStatus = computed<'playing' | 'won' | 'lost'>(() => {
+  const gameStatus = computed<GameStatus>(() => {
     if (displayedWord.value.every(char => char !== '_')) return 'won';
     if (attempts.value >= maxAttempts) return 'lost';
     return 'playing';
