@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue';
 
-import { themesDictionary } from '../../data/GameWords'
-import type { ThemeKey } from '../../data/GameWords';
+import { themesDictionary } from '@/data/GameWords'
+import type { ThemeKey } from '@/data/GameWords';
 
 export type GameStatus = 'playing' | 'won' | 'lost';
 

@@ -24,6 +24,7 @@
         <label for="guess-input">Буква:</label>
         <input
           id="guess-input"
+          ref="inputRef"
           v-model="inputLetter"
           @input="validateInput"
           @keyup.enter="makeGuess"
@@ -52,12 +53,15 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
+import { ref } from 'vue';
 
-import { useGameLogic } from '../assets/GameLogic';
-import UiButton from '../components/UiButton.vue';
+import { useGameLogic } from '@/composables/GameLogic';
+import UiButton from '@/components/UiButton.vue';
 
 const route = useRoute();
 const router = useRouter();
+
+const inputRef = ref<HTMLInputElement | null>(null);
 
 const {
   targetWord,
@@ -71,9 +75,16 @@ const {
   incorrectGuessedLetters,
   currentImage,
   validateInput,
-  makeGuess,
+  makeGuess: originalMakeGuess,
   restartGame
 } = useGameLogic(route.query.selectedThemes as string);
+
+const makeGuess = () => {
+  originalMakeGuess();
+  if (inputRef.value) {
+    inputRef.value.focus();
+  }
+};
 
 const goBack = () => {
   router.push('/');

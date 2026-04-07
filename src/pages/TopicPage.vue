@@ -51,7 +51,7 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import UiButton from '../components/UiButton.vue';
+import UiButton from '@/components/UiButton.vue';
 
 const router = useRouter();
 
